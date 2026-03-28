@@ -1,7 +1,6 @@
 # DarkSword-RCE  
 ## Static Technical Analysis Report
 
----
 
 ### ⚠ Disclaimer
 
@@ -48,13 +47,12 @@ It contains a structured exploit chain that:
 ### Initial web staging
 
 - [`index.html`](./index.html) creates a hidden iframe and points it at `frame.html`.
-  
-  <img width="470" height="230" alt="Screenshot 2026-03-28 130206" src="https://github.com/user-attachments/assets/1204c087-0095-4a97-9036-672310f06cf7" />
-  
-- [`frame.html`](./frame.html) injects a remote loader from `https://static[.]cdncounter[.]net/assets/rce_loader.js`.
-  
-  <img width="999" height="136" alt="Screenshot 2026-03-28 132453" src="https://github.com/user-attachments/assets/d126499d-ef49-4083-b570-daf1b6541ce3" />
 
+  <img width="470" height="230" alt="Screenshot 2026-03-28 130206" src="https://github.com/user-attachments/assets/2cea35d8-4c87-4ec6-a64d-42b511f05be0" />
+
+- [`frame.html`](./frame.html) injects a remote loader from `https://static[.]cdncounter[.]net/assets/rce_loader.js`.
+
+  <img width="999" height="136" alt="Screenshot 2026-03-28 132453" src="https://github.com/user-attachments/assets/92176f76-9773-4540-afde-ddac175a8dfc" />
 
 ### Loader and stage selection
 
@@ -63,16 +61,15 @@ It contains a structured exploit chain that:
 - `getJS()` fetches stage files synchronously.
 - It selects version-specific worker and module code.
 
-  <img width="559" height="381" alt="image" src="https://github.com/user-attachments/assets/b996168c-506f-4e89-8105-98e1f8f85506" />
+  <img width="559" height="381" alt="Screenshot 2026-03-28 132718" src="https://github.com/user-attachments/assets/d2afd63c-1609-4ef3-a004-fdd9c176410a" />
 
 - It creates helper workers used later to manipulate `dlopen`-related state.
 
-  <img width="540" height="244" alt="image" src="https://github.com/user-attachments/assets/1fa68953-e4a4-4e09-bb0f-654b79969d4d" />
+  <img width="540" height="244" alt="Screenshot 2026-03-28 132842" src="https://github.com/user-attachments/assets/d8e71007-c422-4e40-a303-5191fbe4ebc9" />
 
 - It evaluates the browser-side exploit module and starts the compromise flow.
 
-  <img width="639" height="828" alt="image" src="https://github.com/user-attachments/assets/ef23b317-8a7c-4f3f-a389-36be123122bd" />
-
+  <img width="469" height="869" alt="Screenshot 2026-03-28 130327" src="https://github.com/user-attachments/assets/775daee0-9743-4d6e-a4e1-3cb5152cd1ba" />
 
 ### Browser exploit module
 
@@ -346,7 +343,7 @@ Why it matters:
 - This is the real browser-to-native pivot.
 - Once `fcall()` exists, the payload can treat the compromised process as a controllable native runtime.
 
-<img width="1113" height="853" alt="Screenshot 2026-03-28 130409" src="https://github.com/user-attachments/assets/2640f7a1-46c2-4071-b1bd-99018cc8cec0" />
+<img width="1113" height="853" alt="Screenshot 2026-03-28 130409" src="https://github.com/user-attachments/assets/4bad96f1-cbd6-485f-9692-5c2a2bb0bc1c" />
 
 ## 8. `setup_fcall_jopchain()` in `pe_main.js`
 
