@@ -42,7 +42,7 @@ It contains a structured exploit chain that:
 
 ---
 
-## Repository Execution Flow
+## Malware Execution Flow
 
 ### Initial web staging
 
@@ -160,7 +160,7 @@ Source:
 - Google Cloud Blog, "The Proliferation of DarkSword: iOS Exploit Chain Adopted by Multiple Threat Actors"  
   https://cloud.google.com/blog/topics/threat-intelligence/darksword-ios-exploit-chain
 
-### CVEs tied to the modules in this repository
+### CVEs tied to the modules in this malware
 
 | Module | CVE | Public description | Chain role | Patched in |
 |---|---|---|---|---|
@@ -172,7 +172,7 @@ Source:
 | `sbx1_main.js` | `CVE-2025-43510` | XNU memory management bug | GPU-to-`mediaplaybackd` sandbox escape | iOS 18.7.2, 26.1 |
 | `pe_main.js` | `CVE-2025-43520` | XNU VFS race / kernel memory corruption | Local privilege escalation / kernel stage | iOS 18.7.2, 26.1 |
 
-### How the CVEs map onto this repository's flow
+### How the CVEs map onto this malware's flow
 
 1. `CVE-2025-31277` or `CVE-2025-43529` provides the JavaScriptCore renderer compromise.
 2. `CVE-2026-20700` is then used to turn browser memory control into a PAC-bypassing native bridge.
@@ -392,7 +392,7 @@ Purpose:
 
 Why it matters:
 
-- It shows this repository is targeting operational reliability against modern platform hardening, not just demonstrating a browser exploit.
+- It shows this malware is targeting operational reliability against modern platform hardening, not just demonstrating a browser exploit.
 
 ## 11. `start()` in `pe_main.js`
 
@@ -414,7 +414,7 @@ Observed target processes:
 
 Why it matters:
 
-- This is the clearest evidence that the repository has moved past exploitation into collection-oriented intrusive behavior.
+- This is the clearest evidence that the malware has moved past exploitation into collection-oriented intrusive behavior.
 
 ---
 
@@ -424,7 +424,7 @@ Why it matters:
 
 Location: [`rce_module.js:29`](./rce_module.js#L29)
 
-The `rce_offsets` object is the repository's central compatibility database. Each entry is keyed by a device/build string and contains three broad classes of offsets:
+The `rce_offsets` object is the malware's central compatibility database. Each entry is keyed by a device/build string and contains three broad classes of offsets:
 
 ### A. Absolute symbol addresses
 
@@ -497,7 +497,7 @@ This gives the chain a more reliable build-specific offset profile.
 
 ## 4. Custom memory-layout structures used by the malware
 
-The repository also defines its own argument/control blocks. These are safer to document than the full exploit address map because they reflect attacker-authored layouts rather than Apple-internal symbol tables.
+The malware also defines its own argument/control blocks. These are safer to document than the full exploit address map because they reflect attacker-authored layouts rather than Apple-internal symbol tables.
 
 📌 This section is a good place for a close-up screenshot if you want one structure-focused figure instead of a broader code-flow image.
 
@@ -666,7 +666,7 @@ That is why `pe_main.js` contains:
 
 ## Defensive Findings
 
-The repository exhibits multiple traits associated with operational malware rather than research-only exploit code:
+The malware exhibits multiple traits associated with operational malware rather than research-only exploit code:
 
 - hidden iframe-based staging,
 - remote loading from an external asset host,
@@ -705,6 +705,6 @@ The critical path is:
 6. large native payload execution,
 7. process injection and collection-oriented actions.
 
-For defenders, the most important takeaway is that the repository combines browser exploitation, PAC-aware native bridging, and multi-process post-exploitation in one chain, which substantially raises both sophistication and operational risk.
+For defenders, the most important takeaway is that the malware combines browser exploitation, PAC-aware native bridging, and multi-process post-exploitation in one chain, which substantially raises both sophistication and operational risk.
 
 🧩 In practical terms, the malware is valuable to analysts because it preserves the full transition from delivery, to memory corruption, to native bridge, to operational payloading in one place.
